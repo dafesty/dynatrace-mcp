@@ -12,7 +12,8 @@ import {
 import { config } from 'dotenv';
 import { z, ZodRawShape, ZodTypeAny } from "zod";
 
-import { createOAuthClient } from "./dynatrace-clients";
+import { createOAuthClient, listProblemsManual } from "./dynatrace-clients";
+import { getSSOUrl } from 'dt-app';
 import { listVulnerabilities } from "./capabilities/list-vulnerabilities";
 import { listProblems } from "./capabilities/list-problems";
 import { getProblemDetails } from "./capabilities/get-problem-details";
@@ -83,7 +84,7 @@ const main = async () => {
   }
 
   // create an oauth-client
-  const dtClient = await createOAuthClient(oauthClient, oauthClientSecret, dtEnvironment, scopes);
+  const dtClient = await createOAuthClient(oauthClient, oauthClientSecret, dtEnvironment);
 
   console.error("Starting Dynatrace MCP Server...");
   const server = new McpServer(
